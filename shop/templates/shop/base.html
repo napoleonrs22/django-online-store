@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shop{% endblock title %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container-header">
+            <a href="/" class='logo'><img src="{% static 'img/logo.png' %}" alt=""></a>
+
+            <div class="cart-main">
+                {% with total_items=cart|length %}
+                    {% if total_items > 0 %}
+                        <a href="{% url 'cart:cart_detail' %}" class="cart_btn">
+                            {{ total_items }} item{{ total_items|pluralize }}
+                            ${{ cart.get_total_price }}
+                        </a>
+                    {% elif not order %}
+                        Cart is empty.
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </header>
+    <div id="content">
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+</body>
+</html>
