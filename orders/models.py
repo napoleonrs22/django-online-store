@@ -56,6 +56,7 @@ class Order(models.Model):
     def get_total_cost(self):
         total_cost =  self.get_total_cost_before_discount()
         return  total_cost - self.get_discount()
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
                               related_name='items',
