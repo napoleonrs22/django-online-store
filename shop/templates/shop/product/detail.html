@@ -8,8 +8,7 @@
 {% block content %}
   <div class="product_detail">
     <div class="product_img">
-      <img src="{% if product.image %}{{ product.image.url }}{% else %}
-      {% static "img/no_image.png" %}{% endif %}">
+      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ product.name }}">
     </div>
 
     <div class="product_info">
@@ -26,6 +25,21 @@
         <input type="submit" value="Add to cart">
       </form>
       {{ product.description|linebreaks }}
+
+      {% if recommended_products %}
+      <div class="recommendations">
+          <h3>People who bought this also bought</h3>
+          {% for rec_product in recommended_products %}
+              <div class="item">
+                  <a href="{{ rec_product.get_absolute_url }}">
+                      <img src="{% if rec_product.image %}{{ rec_product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ rec_product.name }}">
+                  </a>
+                  <p><a href="{{ rec_product.get_absolute_url }}">{{ rec_product.name }}</a></p>
+              </div>
+          {% endfor %}
+      </div>
+      {% endif %}
+
     </div>
   </div>
 {% endblock %}
